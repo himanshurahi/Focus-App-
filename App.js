@@ -2,9 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Focus } from "./src/features/focus/focus";
+import Timer from "./src/features/timer/timer";
 
 export default function App() {
-  const [focusSubject, setFocusSubject] = useState(null);
+  const [focusSubject, setFocusSubject] = useState('focus Subject');
 
   const addFocus = (text) => {
     setFocusSubject(text);
@@ -13,7 +14,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       {focusSubject ? (
-        <Text>{focusSubject}</Text>
+        <Timer focusSubject = {focusSubject}></Timer>
       ) : (
         <Focus addFocus={addFocus}></Focus>
       )}

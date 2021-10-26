@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Platform, Vibration } from "react-native";
 
 const mintomills = (mins) => {
   return mins * 1000 * 60;
@@ -14,6 +14,7 @@ export default function Countdown({
   minutes = 0.2,
   isPaused = true,
   onProgress,
+  onTimerEnd
 }) {
   const [millis, setMilles] = useState(mintomills(minutes));
   const minute = Math.floor(millis / 1000 / 60) % 60;
@@ -26,6 +27,10 @@ export default function Countdown({
     let interval = setInterval(() => {
       setMilles((prev) => {
         if (prev == 0) {
+          //vibrate here
+          Vibration.vibrate(500);
+          clearInterval(interval);
+          onTimerEnd();
           return prev;
         }
         let timeLeft = prev - 1000;
@@ -35,6 +40,10 @@ export default function Countdown({
     onProgress(millis / mintomills(minutes));
     return () => clearInterval(interval);
   }, [isPaused, millis]);
+
+  React.useEffect(() => {
+    setMilles(mintomills(minutes));
+  }, [minutes]);
 
   return (
     <View style={styles.container}>

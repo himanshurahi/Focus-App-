@@ -3,27 +3,37 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import Countdown from "../../components/countdown";
-
-export default function Timer({ focusSubject }) {
+import Timing from "./timing";
+export default function Timer({ focusSubject, onTimerEnd }) {
   const [isPaused, setIsPaused] = React.useState(true);
   const [progress, setProgress] = React.useState(1);
+  const [minutes, setMinutes] = React.useState(0.1);
 
   const onStart = () => {
     setIsPaused(!isPaused);
   };
   const onProgress = (progress) => {
-      console.log(progress)
-    setProgress(progress)
+    setProgress(progress);
+  };
+  const changeTime = (min) => {
+    setMinutes(min);
+    setProgress(1);
+    setIsPaused(true);
   };
   return (
     <View style={styles.container}>
-      <Countdown isPaused={isPaused} onProgress={onProgress} />
-      <View>
-        <Text style={{ color: "white", textAlign: "center" }}>
+      <Countdown
+        minutes={minutes}
+        isPaused={isPaused}
+        onProgress={onProgress}
+        onTimerEnd = {onTimerEnd}
+      />
+      <View style = {{marginTop : 20}}>
+        <Text style={{ color: "white", textAlign: "center", fontSize : 20 }}>
           Focusing on:
         </Text>
         <Text
-          style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>
+          style={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize : 20 }}>
           {focusSubject}
         </Text>
       </View>
@@ -46,6 +56,9 @@ export default function Timer({ focusSubject }) {
         color="white"
         progress={progress}
         style={{ height: 10, marginTop: 20 }}></ProgressBar>
+      <View>
+        <Timing onChangeTime={changeTime}></Timing>
+      </View>
     </View>
   );
 }

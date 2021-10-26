@@ -5,7 +5,7 @@ import { Focus } from "./src/features/focus/focus";
 import Timer from "./src/features/timer/timer";
 
 export default function App() {
-  const [focusSubject, setFocusSubject] = useState('focus Subject');
+  const [focusSubject, setFocusSubject] = useState("focus Subject");
 
   const addFocus = (text) => {
     setFocusSubject(text);
@@ -14,11 +14,15 @@ export default function App() {
   return (
     <View style={styles.container}>
       {focusSubject ? (
-        <Timer focusSubject = {focusSubject}></Timer>
+        <Timer
+          focusSubject={focusSubject}
+          onTimerEnd={() => {
+            setFocusSubject(null);
+          }}></Timer>
       ) : (
         <Focus addFocus={addFocus}></Focus>
       )}
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </View>
   );
 }

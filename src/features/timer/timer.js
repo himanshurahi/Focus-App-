@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import Countdown from "../../components/countdown";
 import Timing from "./timing";
-export default function Timer({ focusSubject, onTimerEnd }) {
+export default function Timer({ focusSubject, onTimerEnd, clearSubject }) {
   const [isPaused, setIsPaused] = React.useState(true);
   const [progress, setProgress] = React.useState(1);
   const [minutes, setMinutes] = React.useState(0.1);
@@ -26,14 +26,19 @@ export default function Timer({ focusSubject, onTimerEnd }) {
         minutes={minutes}
         isPaused={isPaused}
         onProgress={onProgress}
-        onTimerEnd = {onTimerEnd}
+        onTimerEnd={onTimerEnd}
       />
-      <View style = {{marginTop : 20}}>
-        <Text style={{ color: "white", textAlign: "center", fontSize : 20 }}>
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ color: "white", textAlign: "center", fontSize: 20 }}>
           Focusing on:
         </Text>
         <Text
-          style={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize : 20 }}>
+          style={{
+            color: "white",
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: 20,
+          }}>
           {focusSubject}
         </Text>
       </View>
@@ -48,8 +53,8 @@ export default function Timer({ focusSubject, onTimerEnd }) {
             {isPaused ? "Start" : "Pause"}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={{ color: "white", textAlign: "center" }}>Stop</Text>
+        <TouchableOpacity style={styles.button} onPress={() => clearSubject()}>
+          <Text style={{ color: "white", textAlign: "center" }}>Cancel</Text>
         </TouchableOpacity>
       </View>
       <ProgressBar

@@ -14,7 +14,7 @@ export default function Countdown({
   minutes = 0.2,
   isPaused = true,
   onProgress,
-  onTimerEnd
+  onTimerEnd,
 }) {
   const [millis, setMilles] = useState(mintomills(minutes));
   const minute = Math.floor(millis / 1000 / 60) % 60;

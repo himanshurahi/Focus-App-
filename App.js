@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { Focus } from "./src/features/focus/focus";
 import { FocusHistory } from "./src/features/focus/focusHistory";
 import Timer from "./src/features/timer/timer";
@@ -31,13 +31,18 @@ export default function App() {
           clearSubject={clearSubject}
           focusSubject={focusSubject}
           onTimerEnd={() => {
-            setFocusHistory([...focusHistory, { subject: focusSubject, status: 2 }]);
+            setFocusHistory([
+              ...focusHistory,
+              { subject: focusSubject, status: 2 },
+            ]);
             setFocusSubject(null);
           }}></Timer>
       ) : (
-        <Focus addFocus={addFocus}></Focus>
+        <>
+          <Focus addFocus={addFocus} ></Focus>
+          <FocusHistory FocusHistory={focusHistory} />
+        </>
       )}
-        <FocusHistory />
       <StatusBar style="light" />
     </View>
   );

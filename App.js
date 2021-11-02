@@ -31,13 +31,19 @@ export default function App() {
           clearSubject={clearSubject}
           focusSubject={focusSubject}
           onTimerEnd={() => {
-            setFocusHistory([...focusHistory, { subject: focusSubject, status: 2 }]);
+            setFocusHistory([
+              ...focusHistory,
+              { subject: focusSubject, status: 2 },
+            ]);
             setFocusSubject(null);
           }}></Timer>
       ) : (
-        <Focus addFocus={addFocus}></Focus>
+        <>
+          <Focus addFocus={addFocus}></Focus>
+          <FocusHistory focusHistory={focusHistory} />
+        </>
       )}
-        <FocusHistory />
+
       <StatusBar style="light" />
     </View>
   );
